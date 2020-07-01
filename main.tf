@@ -76,9 +76,7 @@ module "alb" {
             certificate_arn    = module.acm.this_acm_certificate_arn
             target_group_index = 0
         ssl_policy="ELBSecurityPolicy-TLS-1-1-2017-01"
-           
-       }
-        
+        }
     ]    
     
     tags = {
