@@ -1,17 +1,11 @@
-module "vpc" {
-    source = "github.com/terraform-aws-modules/terraform-aws-vpc"
-    
-    name = "test-vpc"
-    cidr = "10.1.0.0/16"
-    azs  = ["eu-west-1a", "eu-west-1b"]
-    private_subnets = ["10.1.0.0/18", "10.1.128.0/18"]
-    public_subnets  = ["10.1.64.0/18", "10.1.192.0/18"]
-    
-    enable_nat_gateway = true
-    enable_dns_support = true
+module "security_group" {
+  source  = "terraform-aws-modules/security-group/aws"
 
-    tags = {
-        Terraform = "true"
-        Environment = "dev"
-    }
+  name        = "test-sg-01"
+  description = "Security group for example usage with ALB"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress_cidr_blocks = ["0.0.0.0/0"]
+  ingress_rules       = ["http-80-tcp", "https-443-tcp", "all-icmp"]
+  egress_rules        = ["all-all"]
 }
