@@ -1,6 +1,6 @@
 module "records" {
     source  = "terraform-aws-modules/route53/aws//modules/records"
-    zone_id = "Z05830172NQEHW4JNM4HI"
+    zone_id = var.zone_id
     
     records = [
         {

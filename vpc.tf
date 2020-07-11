@@ -10,8 +10,10 @@ module "vpc" {
     enable_nat_gateway = true
     enable_dns_support = true
 
-    tags = {
-        Terraform = "true"
-        Environment = "dev"
-    }
+    tags = merge(
+        local.common_tags,
+        { 
+            Name = "Test-VPC"
+        }
+    )
 }
