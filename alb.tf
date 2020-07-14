@@ -1,3 +1,5 @@
+# ALB 
+
 module "alb" {
     source = "terraform-aws-modules/alb/aws"
 
@@ -36,7 +38,16 @@ module "alb" {
        }
     ]    
     
-    tags = {
-        Environment = "dev"
-    }
+    tags = merge(
+        local.common_tags,
+        { 
+            Name = "Test-LoadBalancer"
+        }
+    )
+}
+
+resource "aws_lb_target_group_attachment" "test" {
+    target_group_arn = module.alb.target_group_arns[0]
+    target_id        = aws_instance.RDN-Test-TerraformInstance-01.private_ip
+    port             = 80
 }
